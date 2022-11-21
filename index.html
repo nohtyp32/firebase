@@ -1,7 +1,52 @@
 <!DOCTYPE html>
 
-<button onclick="googleLogin()">
+<html>
+  <head>
+    <title>Firebase Realtime Database</title>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <th>int</th>
+        <th>float</th>
+      </thead>
+      <tbody id="tbody1">
 
-  Login with Google
+      </tbody>
+    </table>
 
-</button>
+    <script type="module" src="/app.js" id="MainScript">
+
+      function SelectAllData() {
+        firebase.database().ref('test').once('value',
+        function(AllRecords){
+          AllRecords.forEach(
+            function(CurrentRecord) {
+              var int = CurrentRecord.val().NameOfVariable
+              var float = CurrentRecord.val().NameOfVariable
+              AddItemsToTable(int, float);
+            }
+          );
+          });
+      }
+
+      window.onload = SelectAllData;
+
+      var number = 0;
+      function AddItemsToTable(int, float) {
+        var tbody = document.getElementById('tbody1');
+        var trow = document.createElement('tr');
+        var td1 = document.createElement('td');
+        var td2 = document.createElement('td');
+        var td3 = document.createElement('td');
+        td1.innerHTML= ++number;
+        td2.innerHTML= int;
+        td3.innerHTML= float;
+        trow.appendChild(td1); trow.appendChild(td2); trow.appendChild(td3);
+        tbody.appendChild(trow);
+      }
+
+
+    </script>
+  </body>
+</html>
